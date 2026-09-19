@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu primeiro passo: da ideia ao software com IA</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f4f0e7;--text:#10100f;--accent:#ff5b2e;--highlight:#c9ff5b;--card-bg:#fffdf8;--border:#e0dcd3;--radius:12px}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+a:hover,a:focus-visible{border-bottom-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+.container{max-width:780px;margin:0 auto;padding:2rem 1rem 4rem}
+
+header{text-align:center;padding:3rem 0 2rem}
+header h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;letter-spacing:-.02em;margin-bottom:.5rem}
+header h1 span{background:var(--accent);color:#fff;padding:.1em .35em;border-radius:6px;display:inline-block}
+header p.subtitle{font-size:1.05rem;color:#555;max-width:480px;margin:0 auto}
+
+.badge{display:inline-block;background:var(--highlight);color:var(--text);font-size:.75rem;font-weight:700;padding:.25em .7em;border-radius:20px;text-transform:uppercase;letter-spacing:.04em}
+
+section{margin-top:2.5rem}
+section h2{font-size:1.35rem;font-weight:700;margin-bottom:1rem;padding-bottom:.4rem;border-bottom:3px solid var(--accent);display:inline-block}
+
+.about-grid{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:start}
+.avatar{width:72px;height:72px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;color:#fff;flex-shrink:0}
+.about-text p{margin-bottom:.5rem}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-top:.5rem}
+.card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.07)}
+.card h3{font-size:.95rem;font-weight:700;margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem}
+.card h3 .icon{font-size:1.1rem}
+.card p{font-size:.85rem;color:#444;line-height:1.5}
+
+.project-block{background:var(--text);color:var(--bg);border-radius:var(--radius);padding:1.8rem;margin-top:.5rem;position:relative;overflow:hidden}
+.project-block::after{content:"";position:absolute;top:-30px;right:-30px;width:100px;height:100px;background:var(--accent);border-radius:50%;opacity:.25}
+.project-block h3{font-size:1.2rem;font-weight:700;margin-bottom:.5rem;color:var(--highlight)}
+.project-block p{margin-bottom:.8rem;line-height:1.6;color:#ccc}
+.project-block a{color:var(--highlight);font-weight:600;border-bottom:1px dashed var(--highlight)}
+.project-block a:hover{border-bottom-style:solid}
+
+.goals{list-style:none;counter-reset:goal}
+.goals li{counter-increment:goal;padding:.8rem 1rem .8rem 3.2rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:.6rem;position:relative;font-size:.95rem}
+.goals li::before{content:counter(goal);position:absolute;left:1rem;top:.75rem;width:1.6rem;height:1.6rem;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700}
+.doubt{margin-top:1rem;padding:1rem 1.2rem;background:var(--highlight);border-radius:var(--radius);font-size:.9rem}
+.doubt strong{display:block;margin-bottom:.2rem}
+
+.checklist{list-style:none;margin-top:.5rem}
+.checklist li{margin-bottom:.5rem}
+.checklist label{display:flex;align-items:center;gap:.7rem;padding:.7rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:background .15s;font-size:.95rem;user-select:none}
+.checklist label:hover{background:#f0ecdf}
+.checklist input[type="checkbox"]{appearance:none;width:22px;height:22px;border:2px solid var(--accent);border-radius:6px;flex-shrink:0;cursor:pointer;position:relative;transition:background .15s,border-color .15s}
+.checklist input[type="checkbox"]:checked{background:var(--accent);border-color:var(--accent)}
+.checklist input[type="checkbox"]:checked::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.8rem;font-weight:700}
+.checklist input[type="checkbox"]:focus-visible{outline:2px solid var(--highlight);outline-offset:2px}
+.progress{margin-top:.8rem;font-size:.85rem;color:#666}
+.progress-bar{height:6px;background:var(--border);border-radius:3px;margin-top:.3rem;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .3s ease}
+
+footer{margin-top:3rem;text-align:center;font-size:.8rem;color:#888;padding-top:1.5rem;border-top:1px solid var(--border)}
+
+@media(max-width:500px){
+  .container{padding:1.2rem .8rem 3rem}
+  header{padding:2rem 0 1.5rem}
+  .about-grid{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .cards{grid-template-columns:1fr}
+  .project-block{padding:1.4rem}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <p class="badge">Mentoria 2.0 — Rafael Saccomani</p>
+    <h1>Meu primeiro passo: <span>da ideia ao software com IA</span></h1>
+    <p class="subtitle">O que aprendi na Aula 1 e como pretendo transformar ideias em produto.</p>
+  </header>
+
+  <section aria-label="Sobre mim">
+    <h2>Quem sou eu</h2>
+    <div class="about-grid">
+      <div class="avatar" aria-hidden="true">A</div>
+      <div class="about-text">
+        <p><strong>André</strong> — Desenvolvimento de Sistemas e Programação.</p>
+        <p>Estou na Mentoria 2.0 para sair da teoria e construir um SaaS real, combinando código com inteligência artificial.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="Aprendizados">
+    <h2>O que aprendi na Aula 1</h2>
+    <div class="cards">
+      <div class="card">
+        <h3><span class="icon" aria-hidden="true">🛠</span> Ferramentas de IA</h3>
+        <p>ChatGPT/Codex, Antigravity, GitHub Copilot e Claude — cada uma com força diferente para gerar, revisar e refatorar código.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon" aria-hidden="true">🧩</span> Ferramenta vs. Modelo</h3>
+        <p>A ferramenta é a interface; o modelo é o motor. Entender isso muda a forma de escolher e combinar soluções.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon" aria-hidden="true">📎</span> Contexto e Referências</h3>
+        <p>Um prompt bom carrega contexto claro e referências precisas — o resultado depende diretamente do que você entrega.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon" aria-hidden="true">💰</span> Economia de Tokens</h3>
+        <p>Tokens custam dinheiro e atenção. Prompts enxutos e validação dos resultados evitam retrabalho e desperdício.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="Projeto Hora Certa">
+    <h2>O Projeto</h2>
+    <div class="project-block">
+      <h3>Hora Certa</h3>
+      <p>Um SaaS de agendamento remoto para vários segmentos — a ideia central da mentoria. Na primeira aula, conheci a proposta, o time e a visão do produto.</p>
+      <a href="https://agenda.sacomani.com.br" target="_blank" rel="noopener noreferrer">Acessar o Hora Certa ↗</a>
+    </div>
+  </section>
+
+  <section aria-label="Próximos passos">
+    <h2>Metas para a próxima aula</h2>
+    <ol class="goals">
+      <li>Explorar a plataforma Hora Certa e mapear as funcionalidades existentes.</li>
+      <li>Criar meu primeiro protótipo de funcionalidade usando IA como copiloto.</li>
+      <li>Documentar dúvidas técnicas para trazer discussões concretas ao time.</li>
+    </ol>
+    <div class="doubt">
+      <strong>Dúvida que quero levar:</strong>
+      Qual é a melhor estratégia para dividir o trabalho entre IA generativa e código manual sem perder controle da arquitetura?
+    </div>
+  </section>
+
+  <section aria-label="Checklist de preparação">
+    <h2>Checklist</h2>
+    <ul class="checklist">
+      <li>
+        <label>
+          <input type="checkbox" id="chk1">
+          Acesso ativo à plataforma
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" id="chk2">
+          Computador configurado
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" id="chk3">
+          Página revisada
+        </label>
+      </li>
+    </ul>
+    <div class="progress" aria-live="polite">
+      <span id="progressText">0 de 3 concluídos</span>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    </div>
+  </section>
+
+  <footer>
+    André · Mentoria 2.0 · Setembro 2026
+  </footer>
+</div>
+
+<script>
+(function(){
+  var checks = document.querySelectorAll('.checklist input[type="checkbox"]');
+  var text = document.getElementById('progressText');
+  var fill = document.getElementById('progressFill');
+  function update(){
+    var done = 0;
+    checks.forEach(function(c){ if(c.checked) done++; });
+    text.textContent = done + ' de 3 concluídos';
+    fill.style.width = Math.round(done/3*100) + '%';
+  }
+  checks.forEach(function(c){ c.addEventListener('change', update); });
+})();
+</script>
+</body>
+</html>
